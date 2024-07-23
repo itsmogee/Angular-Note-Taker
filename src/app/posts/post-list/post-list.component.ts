@@ -1,6 +1,7 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatExpansionModule, MatAccordion } from '@angular/material/expansion';
+import { MatButton } from '@angular/material/button';
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
 import { Subscription } from 'rxjs';
@@ -10,7 +11,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './post-list.component.html',
   styleUrl: './post-list.component.css',
   standalone: true,
-  imports: [MatExpansionModule, MatAccordion, NgFor, NgIf],
+  imports: [MatExpansionModule, MatAccordion, NgFor, NgIf, MatButton],
 })
 export class PostListComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
