@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Post } from './post.model';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,10 +17,21 @@ export class PostsService {
     this.http
       .get<{
         message: string;
-        posts: Post[];
+        posts: [{ _id: string; title: string; content: string }];
       }>('http://localhost:3000/api/posts')
-      .subscribe((postData) => {
-        this.posts = postData.posts;
+      .pipe(
+        map((postData) => {
+          return postData.posts.map((post) => {
+            return {
+              title: post.title,
+              content: post.content,
+              id: post._id,
+            };
+          });
+        }),
+      )
+      .subscribe((transformedPosts) => {
+        this.posts = transformedPosts;
         this.postsUpdated.next([...this.posts]);
       });
   }
@@ -40,6 +52,14 @@ export class PostsService {
         console.log(responseData);
         this.posts.push(post);
         this.postsUpdated.next([...this.posts]);
+      });
+  }
+
+  deletePost(postID: string) {
+    this.http
+      .delete(`http://localhost:3000/api/posts/${postID}`)
+      .subscribe(() => {
+        console.log('Deleted');
       });
   }
 }
