@@ -47,19 +47,25 @@ export class PostsService {
       content: content,
     };
     this.http
-      .post<{ message: string }>('http://localhost:3000/api/posts', post)
+      .post<{
+        message: string;
+        postID: string;
+      }>('http://localhost:3000/api/posts', post)
       .subscribe((responseData) => {
-        console.log(responseData);
+        const id = responseData.postID;
+        post.id = id;
         this.posts.push(post);
         this.postsUpdated.next([...this.posts]);
       });
   }
 
-  deletePost(postID: string) {
+  deletePost(postID: string | null) {
     this.http
       .delete(`http://localhost:3000/api/posts/${postID}`)
       .subscribe(() => {
-        console.log('Deleted');
+        const updatedPosts = this.posts.filter((post) => postID !== post.id);
+        this.posts = updatedPosts;
+        this.postsUpdated.next([...this.posts]);
       });
   }
 }
