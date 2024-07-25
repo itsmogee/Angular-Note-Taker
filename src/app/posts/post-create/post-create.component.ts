@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardActions, MatCardModule } from '@angular/material/card';
@@ -6,6 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { NgIf } from '@angular/common';
 import { PostsService } from '../posts.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Post } from '../post.model';
 
 @Component({
   selector: 'app-post-create',
@@ -21,14 +23,49 @@ import { PostsService } from '../posts.service';
   templateUrl: './post-create.component.html',
   styleUrl: './post-create.component.css',
 })
-export class PostCreateComponent {
-  constructor(public postsService: PostsService) {}
+export class PostCreateComponent implements OnInit {
+  private mode = 'create';
+  private postID: string;
+  post: Post;
 
-  onAddPost(form: NgForm) {
+  constructor(
+    public postsService: PostsService,
+    public route: ActivatedRoute,
+  ) {}
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has('postID')) {
+        this.mode = 'edit';
+        this.postID = paramMap.get('postID');
+        this.postsService.getPost(this.postID).subscribe((postData) => {
+          this.post = {
+            id: postData._id,
+            title: postData.title,
+            content: postData.content,
+          };
+        });
+      } else {
+        this.mode = 'create';
+        this.postID = null;
+      }
+    });
+  }
+
+  onSavePost(form: NgForm) {
     if (form.invalid) {
       return;
     }
-    this.postsService.addPost(form.value.title, form.value.content);
+
+    if (this.mode === 'create') {
+      this.postsService.addPost(form.value.title, form.value.content);
+    } else {
+      this.postsService.updatePost(
+        this.postID,
+        form.value.title,
+        form.value.content,
+      );
+    }
     form.reset();
   }
 }
