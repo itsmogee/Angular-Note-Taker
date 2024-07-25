@@ -11,3 +11,12 @@ input[type="file"] {
   display: none;
   /*visibility: hidden;*/
 }
+
+.image-preview {
+  height: 8rem;
+  margin: 1rem 1rem;
+}
+
+.image-preview img {
+  height: 100%;
+}
