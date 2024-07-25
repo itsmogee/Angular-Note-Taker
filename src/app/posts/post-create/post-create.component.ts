@@ -8,6 +8,7 @@ import { NgIf } from '@angular/common';
 import { PostsService } from '../posts.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Post } from '../post.model';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-post-create',
@@ -19,6 +20,7 @@ import { Post } from '../post.model';
     MatButtonModule,
     MatCardActions,
     NgIf,
+    MatProgressSpinner,
   ],
   templateUrl: './post-create.component.html',
   styleUrl: './post-create.component.css',
@@ -27,6 +29,7 @@ export class PostCreateComponent implements OnInit {
   private mode = 'create';
   private postID: string;
   post: Post;
+  isLoading = false;
 
   constructor(
     public postsService: PostsService,
@@ -38,7 +41,9 @@ export class PostCreateComponent implements OnInit {
       if (paramMap.has('postID')) {
         this.mode = 'edit';
         this.postID = paramMap.get('postID');
+        this.isLoading = true;
         this.postsService.getPost(this.postID).subscribe((postData) => {
+          this.isLoading = false;
           this.post = {
             id: postData._id,
             title: postData.title,
@@ -57,6 +62,7 @@ export class PostCreateComponent implements OnInit {
       return;
     }
 
+    this.isLoading = true;
     if (this.mode === 'create') {
       this.postsService.addPost(form.value.title, form.value.content);
     } else {
