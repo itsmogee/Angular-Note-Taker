@@ -7,6 +7,7 @@ import { PostsService } from '../posts.service';
 import { Subscription } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-post-list',
@@ -21,18 +22,23 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     NgIf,
     MatButtonModule,
     MatProgressSpinner,
+    MatPaginator,
   ],
 })
 export class PostListComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
   private postsSub?: Subscription;
   isLoading = false;
+  totalPosts = 10;
+  postsPerPage = 1;
+  currPage = 1;
+  pageSizeOptions = [1, 2, 5, 10];
 
   constructor(public postsService: PostsService) {}
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.postsService.getPosts();
+    this.postsService.getPosts(this.postsPerPage, this.currPage);
     this.postsSub = this.postsService
       .getPostUpdateListener()
       .subscribe((posts: Post[]) => {
@@ -47,5 +53,11 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.postsSub?.unsubscribe();
+  }
+
+  onChangedPage(event: PageEvent) {
+    this.currPage = event.pageIndex + 1;
+    this.postsPerPage = event.pageSize;
+    this.postsService.getPosts(this.postsPerPage, this.currPage);
   }
 }

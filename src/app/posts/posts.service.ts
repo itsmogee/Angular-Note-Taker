@@ -18,12 +18,15 @@ export class PostsService {
     private router: Router,
   ) {}
 
-  getPosts() {
+  getPosts(postsPerPage: number, currPage: number) {
+    const queryParams = `?pagesize=${postsPerPage}&page=${currPage}`;
     this.http
       .get<{
         message: string;
-        posts: [{ _id: string; title: string; content: string }];
-      }>('http://localhost:3000/api/posts')
+        posts: [
+          { _id: string; title: string; content: string; imagePath: string },
+        ];
+      }>(`http://localhost:3000/api/posts${queryParams}`)
       .pipe(
         map((postData) => {
           return postData.posts.map((post) => {
