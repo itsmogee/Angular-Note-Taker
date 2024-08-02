@@ -1,6 +1,6 @@
 import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { Component, NgModule } from '@angular/core';
+import { ReactiveFormsModule, FormsModule, NgForm } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardActions, MatCardModule } from '@angular/material/card';
 import { MatInput, MatInputModule } from '@angular/material/input';
@@ -22,4 +22,8 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 })
 export class LoginComponent {
   isLoading = false;
+
+  onLogin(form: NgForm) {
+    console.log(form.value);
+  }
 }
