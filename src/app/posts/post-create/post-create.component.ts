@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
   ReactiveFormsModule,
-  NgForm,
   FormGroup,
   FormControl,
   Validators,
