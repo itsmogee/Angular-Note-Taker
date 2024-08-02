@@ -1,12 +1,25 @@
+import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardActions, MatCardModule } from '@angular/material/card';
+import { MatInput, MatInputModule } from '@angular/material/input';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
-  selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [
+    MatInputModule,
+    MatCardModule,
+    MatButtonModule,
+    MatCardActions,
+    NgIf,
+    MatProgressSpinner,
+    FormsModule,
+  ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
-
+  isLoading = false;
 }
