@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MatExpansionModule, MatAccordion } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { Post } from '../post.model';
@@ -34,7 +34,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   currPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
 
-  constructor(public postsService: PostsService) {}
+  postsService = inject(PostsService);
 
   ngOnInit(): void {
     this.isLoading = true;

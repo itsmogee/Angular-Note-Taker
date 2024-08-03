@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardActions, MatCardModule } from '@angular/material/card';
@@ -24,7 +24,7 @@ import { AuthService } from '../auth.service';
 export class LoginComponent {
   isLoading = false;
 
-  constructor(public authService: AuthService) {}
+  authService = inject(AuthService);
 
   onLogin(form: NgForm) {
     if (form.invalid) {

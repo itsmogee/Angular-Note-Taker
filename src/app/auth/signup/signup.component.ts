@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModule, inject } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, NgForm } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardActions, MatCardModule } from '@angular/material/card';
@@ -25,7 +25,7 @@ import { AuthService } from '../auth.service';
 export class SignupComponent {
   isLoading = false;
 
-  constructor(public authService: AuthService) {}
+  authService = inject(AuthService);
 
   onSignup(form: NgForm) {
     if (form.invalid) {
