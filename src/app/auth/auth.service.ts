@@ -23,6 +23,12 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
+  logout() {
+    this.token = null;
+    this.isAuthenticated = false;
+    this.authStatusListener.next(false);
+  }
+
   createUser(email: string, password: string) {
     const authData: AuthData = { email: email, password: password };
     this.http
