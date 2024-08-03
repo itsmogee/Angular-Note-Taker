@@ -24,7 +24,13 @@ export class PostsService {
       .get<{
         message: string;
         posts: [
-          { _id: string; title: string; content: string; imagePath: string },
+          {
+            _id: string;
+            title: string;
+            content: string;
+            imagePath: string;
+            creator: string;
+          },
         ];
         maxPosts: number;
       }>(`http://localhost:3000/api/posts${queryParams}`)
@@ -37,6 +43,7 @@ export class PostsService {
                 content: post.content,
                 id: post._id,
                 imagePath: post.imagePath,
+                creator: post.creator,
               };
             }),
             maxPosts: postData.maxPosts,
@@ -44,6 +51,7 @@ export class PostsService {
         }),
       )
       .subscribe((transformedPostsData) => {
+        console.log(transformedPostsData);
         this.posts = transformedPostsData.posts;
         this.postsUpdated.next({
           posts: [...this.posts],

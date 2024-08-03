@@ -4,6 +4,7 @@ const Post = require("../models/post");
 
 const router = express.Router();
 const checkAuth = require("../middleware/check-auth");
+const { retry } = require("rxjs");
 
 const MIME_TYPE_MAP = {
   "image/png": "png",
@@ -37,6 +38,7 @@ router.post(
       title: req.body.title,
       content: req.body.content,
       imagePath: `${url}/images/${req.file.filename}`,
+      creator: req.userData.userID,
     });
     post.save().then((createdPost) => {
       res.status(201).json({
