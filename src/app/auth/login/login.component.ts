@@ -1,10 +1,11 @@
 import { NgIf } from '@angular/common';
-import { Component, NgModule } from '@angular/core';
-import { ReactiveFormsModule, FormsModule, NgForm } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardActions, MatCardModule } from '@angular/material/card';
-import { MatInput, MatInputModule } from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { AuthService } from '../auth.service';
 
 @Component({
   standalone: true,
@@ -23,7 +24,12 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 export class LoginComponent {
   isLoading = false;
 
+  constructor(public authService: AuthService) {}
+
   onLogin(form: NgForm) {
-    console.log(form.value);
+    if (form.invalid) {
+      return;
+    }
+    this.authService.loginUser(form.value.email, form.value.password);
   }
 }
