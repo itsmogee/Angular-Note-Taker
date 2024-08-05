@@ -4,6 +4,7 @@ import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { HeaderComponent } from './header/header.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { AuthService } from './auth/auth.service';
+import { ErrorComponent } from './error/error.component';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ import { AuthService } from './auth/auth.service';
     PostCreateComponent,
     HeaderComponent,
     PostListComponent,
+    ErrorComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
