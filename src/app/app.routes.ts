@@ -13,19 +13,27 @@ export const routes: Routes = [
   {
     path: 'create',
     canActivate: [AuthGuard],
-    component: PostCreateComponent,
+    loadComponent: () =>
+      import('./posts/post-create/post-create.component').then(
+        (m) => m.PostCreateComponent,
+      ),
   },
   {
     path: 'edit/:postID',
     canActivate: [AuthGuard],
-    component: PostCreateComponent,
+    loadComponent: () =>
+      import('./posts/post-create/post-create.component').then(
+        (m) => m.PostCreateComponent,
+      ),
   },
   {
     path: 'login',
-    component: LoginComponent,
+    loadComponent: () =>
+      import('./auth/login/login.component').then((m) => m.LoginComponent),
   },
   {
     path: 'signup',
-    component: SignupComponent,
+    loadComponent: () =>
+      import('./auth/signup/signup.component').then((m) => m.SignupComponent),
   },
 ];
