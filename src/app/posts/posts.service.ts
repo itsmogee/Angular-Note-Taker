@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Post } from './post.model';
 import { Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpBackend, HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
 import { Router } from '@angular/router';
-import { Form } from '@angular/forms';
+import { environment } from '../../environments/environment';
+
+const BACKEND_URL = environment.apiURL + '/posts/';
 
 @Injectable({
   providedIn: 'root',
@@ -67,7 +69,7 @@ export class PostsService {
       content: string;
       imagePath: string;
       creator: string;
-    }>(`http://localhost:3000/api/posts/${id}`);
+    }>(BACKEND_URL + id);
   }
 
   getPostUpdateListener() {
@@ -84,7 +86,7 @@ export class PostsService {
       .post<{
         message: string;
         post: Post;
-      }>('http://localhost:3000/api/posts', postData)
+      }>(BACKEND_URL, postData)
       .subscribe((responseData) => {
         this.router.navigate(['/']);
       });
@@ -107,14 +109,12 @@ export class PostsService {
         creator: null,
       };
     }
-    this.http
-      .put(`http://localhost:3000/api/posts/${id}`, postData)
-      .subscribe((response) => {
-        this.router.navigate(['/']);
-      });
+    this.http.put(BACKEND_URL + id, postData).subscribe((response) => {
+      this.router.navigate(['/']);
+    });
   }
 
   deletePost(postID: string | null) {
-    return this.http.delete(`http://localhost:3000/api/posts/${postID}`);
+    return this.http.delete(BACKEND_URL + postID);
   }
 }
