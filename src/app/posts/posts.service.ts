@@ -35,7 +35,7 @@ export class PostsService {
           },
         ];
         maxPosts: number;
-      }>(`http://localhost:3000/api/posts${queryParams}`)
+      }>(BACKEND_URL + queryParams)
       .pipe(
         map((postData) => {
           return {

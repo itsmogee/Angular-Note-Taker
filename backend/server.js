@@ -1,5 +1,5 @@
+const app = require("./app");
 const http = require("node:http"); // How to import in nodejs
-const app = require("./backend/app");
 const { debug } = require("node:console");
 
 const normalizePort = (val) => {
