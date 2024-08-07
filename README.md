@@ -1,27 +1,32 @@
-# MeanCourse
+# MEAN Notes Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.5.
+[My Angular Note Web Application](http://mean-ang-node.s3-website-us-east-1.amazonaws.com/)
 
-## Development server
+## What is this ?
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+This is an Angular Full-stack application for taking notes with images.
+It acts as a message or note board for users.
 
-## Code scaffolding
+I completed this project purely to have some insight into working on
+full-stack projects and also learning the Angular 18 Framework, MongoDB,
+ExpressJS and NodeJS.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+It is not meant to be used as a final ready to deploy product but only
+as a proof of concept.
 
-## Build
+The Frontend was developed using Angular 18 and was deployed to a Amazon AWS S3 bucket.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+The Backend was developed using NodeJS and ExpressJS, it was deployed seperately
+to an Amazon AWS Elasticbeanstalk instance. This instance runs the backend server
+and stores the images uploaded instead of MongoDB.
 
-## Running unit tests
+MongoDB was used as the database solution of choice, using MongoDB Atlas to store
+user data and also encryption of the users passwords was applied using a hashing
+NodeJS package.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## How to Use
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- You can browser note items anonymously without having to login as a user.
+- You can login with an already created user accout:
+  - user1@user1, password: asdf : You can create a new post and edit or delete the user-1's posts.
+- You can create a new user account using the sign-up button and create/edit/delete user-related posts.
